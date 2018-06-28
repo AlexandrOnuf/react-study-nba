@@ -8,6 +8,8 @@
     "sourceMap": true,
     "allowJs": true,
     "allowUnusedLabels": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmitOnError": true,
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",

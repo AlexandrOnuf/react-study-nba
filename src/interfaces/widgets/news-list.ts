@@ -1,4 +1,4 @@
-import { Article } from '../../interfaces';
+import { Article, Team } from '../../interfaces';
 
 export default interface NewsListProps {
   type: string;
@@ -12,4 +12,5 @@ export interface NewsListState {
   end: number;
   items: Article[];
   start: number;
+  teams: Team[];
 }

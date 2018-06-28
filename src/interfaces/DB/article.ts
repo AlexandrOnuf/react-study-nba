@@ -1,6 +1,6 @@
 export default interface Article {
   id: number;
-  team?: number;
+  team: number;
   title: string;
   image?: string;
   body: string;

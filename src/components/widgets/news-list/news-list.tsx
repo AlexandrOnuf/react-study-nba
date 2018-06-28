@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-// import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import axios from 'axios';
 
+import { Button, CardInfo } from '../../../components';
 import { DB_HOST_URL } from '../../../config';
 import { NewsListProps, NewsListState } from '../../../interfaces';
 import './news-list.css';
@@ -16,6 +17,7 @@ export default class NewsList extends React.Component<NewsListProps, {}> {
     end: this.calcAmountOfNews(),
     items: [],
     start: this.props.start ? this.props.start : 0,
+    teams: []
   }
 
   public componentWillMount() {
@@ -23,6 +25,15 @@ export default class NewsList extends React.Component<NewsListProps, {}> {
   }
 
   public request(start: number, end: number) {
+    if (this.state.teams.length < 1) {
+      axios.get(`${DB_HOST_URL}/teams`)
+        .then( response => {
+          this.setState({
+            teams: response.data
+          });
+        })
+    }
+
     axios.get(`${DB_HOST_URL}/articles?_start=${start}&_end=${end}`)
       .then( response => {
         if (response.data) {
@@ -43,20 +54,34 @@ export default class NewsList extends React.Component<NewsListProps, {}> {
   }
 
   public renderNews = () => {
-    let template:  JSX.Element[] | null = null;
+    let template:  JSX.Element[] | JSX.Element = (<div>&nbsp;</div>);
     
     switch (this.props.type) {
       case('card'):
         template = this.state.items.map( (item, i) => (
-          <div key={i}>
-            <div className='newslist_item'>
-              <Link to={`/articles/${item.id}`} ><h2>{item.title}</h2></Link>
+          <CSSTransition
+            classNames={{
+               enter: 'newsList_wrapper',
+               enterActive: 'newsList_wrapper_enter'
+            }}
+            timeout={500}
+            key={i}
+          >
+            <div>
+              <div className='newslist_item'>
+                <Link to={`/articles/${item.id}`} >
+                  <CardInfo teams={this.state.teams} 
+                    team_id={item.team} date={item.date}
+                  />
+                  <h2>{item.title}</h2>
+                </Link>
+              </div>
             </div>
-          </div>
+          </CSSTransition>
         ));
         break;
       default:
-        template = null;
+        template = (<div>&nbsp;</div>);
     }
     return (
       template
@@ -66,17 +91,24 @@ export default class NewsList extends React.Component<NewsListProps, {}> {
   public render() {
     return (
       <div>
-        {this.renderNews()}
-        <div onClick={() => this.loadMore()}>
-          LOAD MORE
-        </div>
+        <TransitionGroup
+          component='div'
+          className='list'
+        >
+          {this.renderNews()}
+        </TransitionGroup>
+        <Button
+          type='loadmore'
+          loadMore={()=>this.loadMore()}
+          cta='Load more news'
+         />
       </div>
     )
   }
 
   private calcAmountOfNews() {
     if (this.props.start && this.props.amount) { 
-        return this.props.start + this.props.amount
+      return this.props.start + this.props.amount
     } else if (this.props.start === undefined && this.props.amount !== undefined) {
       return this.props.amount
     } else if (this.props.start !== undefined && this.props.amount === undefined) {

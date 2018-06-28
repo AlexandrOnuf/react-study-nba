@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { NewsList, NewsSlider } from '../../components';
+import { NewsList, NewsSlider, VideosList } from '../../components';
 
 
 const Home= () => {
@@ -18,6 +18,13 @@ const Home= () => {
           type="card"
           loadmore={true}
           start={3}
+          amount={3}
+        />
+        <VideosList 
+          type="card"
+          title={true}
+          loadmore={false}
+          start={0}
           amount={3}
         />
       </div>
