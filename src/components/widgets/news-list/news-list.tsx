@@ -38,7 +38,9 @@ export default class NewsList extends React.Component<NewsListProps, {}> {
       .then( response => {
         if (response.data) {
           this.setState({
-            items: [...this.state.items, ...response.data]
+            end,
+            items: [...this.state.items, ...response.data],
+            start
           });
         }
       })
@@ -47,10 +49,6 @@ export default class NewsList extends React.Component<NewsListProps, {}> {
   public loadMore() {
     const newEnd = this.state.end + this.state.amount;
     this.request(this.state.end, newEnd)
-    this.setState({
-      end: newEnd,
-      start: this.state.end
-    });
   }
 
   public renderNews = () => {

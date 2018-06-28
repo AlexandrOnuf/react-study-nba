@@ -38,6 +38,7 @@ export default class VideosList extends React.Component<VideosListProps> {
       .then( response => {
         if (response.data) {
           this.setState({
+            end ,start,
             videos: [...this.state.videos, ...response.data]
           });
         }
@@ -47,10 +48,6 @@ export default class VideosList extends React.Component<VideosListProps> {
   public loadMore() {
     const newEnd = this.state.end + this.state.amount;
     this.request(this.state.end, newEnd)
-    this.setState({
-      end: newEnd,
-      start: this.state.end
-    });
   }
 
   public renderButton = (): JSX.Element => {
