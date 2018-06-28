@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import './buttons.css';
 
-import { ButtonProps } from '../../../interfaces';
+import { ButtonProps } from 'interfaces';  // tslint:disable-line
 
 const Button = (props: ButtonProps) => {
   let template: JSX.Element = (<div>&nbsp;</div>);

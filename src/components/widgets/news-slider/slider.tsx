@@ -1,10 +1,11 @@
 import axios from 'axios';
 import * as React from 'react';
 
-import { SliderTemplates } from '../../../components';
-import { DB_HOST_URL } from '../../../config';
-import { Article, NewsSliderProps } from '../../../interfaces';
-
+/* tslint:disable */
+import { SliderTemplates } from 'components';
+import { DB_HOST_URL } from 'config';
+import { Article, NewsSliderProps } from 'interfaces';
+/* tslint:enable */
 
 interface NewsSliderState {
   news: Article[];

@@ -3,11 +3,13 @@ import * as React from 'react';
 
 import axios from 'axios';
 
-import { Button } from '../../../components';
-import { DB_HOST_URL } from '../../../config';
-import { VideosListProps, VideosListState } from '../../../interfaces';
+/* tslint:disable */
+import { Button } from 'components';
+import { DB_HOST_URL } from 'config';
+import { VideosListProps, VideosListState } from 'interfaces';
 import VideosListTemplate from './videos-list-templates';
 import './videos-list.css';
+/* tslint:enable */
 
 
 export default class VideosList extends React.Component<VideosListProps> {

@@ -5,7 +5,7 @@ import { Article, Team } from '../../../interfaces';
 
 export interface NewsArticleState {
   article: Article | null;
-  teams: Team[];
+  team: Team | null;
 }
 
 
@@ -18,7 +18,7 @@ export interface NewsArticleProps extends RouteComponentProps<MatchParams> {
 }
 
 export interface ArticleHeaderProps {
-  teamData: Team;
+  teamData: Team | null;
   date: Date | string;
   author: string;
 }

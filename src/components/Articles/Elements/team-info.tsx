@@ -1,5 +1,5 @@
+import {Team} from 'interfaces'; // tslint:disable-line
 import * as React from 'react';
-import {Team} from '../../../interfaces';
 import '../articles.css';
 
 

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import './header.css';
 
-import { SideNavigation } from '../../components';
-import { HeaderProps } from '../../interfaces';
+import { SideNavigation } from 'components';  // tslint:disable-line
+import { HeaderProps } from 'interfaces';  // tslint:disable-line
 
 import * as FontAwasome from 'react-fontawesome';
 

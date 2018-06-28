@@ -12,6 +12,7 @@ import NewsList from './widgets/news-list/news-list';
 import NewsSlider from './widgets/news-slider/slider';
 import SliderTemplates from './widgets/news-slider/slider-templates';  
 import VideosList from './widgets/videos-list/videos-list';
+import VideosRelated from './widgets/videos-list/videos-related/videos-related';
 
 export {
   Button,
@@ -26,5 +27,6 @@ export {
   SideNavigationItems,
   SliderTemplates,
   VideoArticle,
-  VideosList
+  VideosList,
+  VideosRelated
 }

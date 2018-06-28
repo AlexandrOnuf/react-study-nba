@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import axios from 'axios';
-
+/* tslint:disable */
 import { Button, CardInfo } from '../../../components';
 import { DB_HOST_URL } from '../../../config';
 import { NewsListProps, NewsListState } from '../../../interfaces';
 import './news-list.css';
-
+/* tslint:enable */
 
 export default class NewsList extends React.Component<NewsListProps, {}> {
 

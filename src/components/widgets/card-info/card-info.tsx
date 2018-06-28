@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as FontAwesome from 'react-fontawesome';
 import './card-info.css';
 
-import { CardInfoProps, Team } from '../../../interfaces';
+import { CardInfoProps, Team } from 'interfaces';  // tslint:disable-line
 
 const CardInfo = (props: CardInfoProps) => {
 

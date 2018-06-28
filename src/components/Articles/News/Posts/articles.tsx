@@ -1,8 +1,8 @@
 import axios from 'axios';
 import * as React from 'react'
 
-import { DB_HOST_URL } from '../../../../config';
-import { NewsArticleProps, NewsArticleState } from '../../../../interfaces';
+import { DB_HOST_URL } from 'config'; // tslint:disable-line
+import { NewsArticleProps, NewsArticleState } from 'interfaces'; // tslint:disable-line
 import '../../articles.css';
 
 import Header from './header';
@@ -12,7 +12,7 @@ export default class NewsArticle extends React.Component<NewsArticleProps> {
 
   public readonly state: NewsArticleState = {
     article: null,
-    teams: []
+    team: null
   }
 
   public componentWillMount() {
@@ -24,7 +24,7 @@ export default class NewsArticle extends React.Component<NewsArticleProps> {
           .then( response => {  // tslint:disable-line
             this.setState({
               article: articleData,
-              teams: response.data
+              team: response.data[0]
             })
           })
 
@@ -33,14 +33,14 @@ export default class NewsArticle extends React.Component<NewsArticleProps> {
 
   public render() {
     const article = this.state.article;
-    const teams = this.state.teams;
+    const team = this.state.team;
 
     return (
       <div>
         { article && (
           <div> 
             <Header 
-              teamData={teams[0]}
+              teamData={team}
               date={article.date}
               author={article.author}
             />

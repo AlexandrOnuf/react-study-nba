@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Slick, { Settings as SlickSettings } from 'react-slick';
-import { SliderTemplatesProps } from '../../../interfaces';
+import { SliderTemplatesProps } from 'interfaces'; // tslint:disable-line
 import './slider.css';
 
 

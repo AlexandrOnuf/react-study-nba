@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import './videos-list.css';
 
-import { CardInfo } from '../../../components';
-import { Team, Video } from '../../../interfaces';
+import { CardInfo } from 'components'; // tslint:disable-line
+import { Team, Video } from 'interfaces'; // tslint:disable-line
 
 interface Props {
   data: Video[]; 
@@ -25,7 +25,6 @@ class VideosListTemplate extends React.PureComponent<Props> {
             <h2>{item.title}</h2>
           </div>
         </div>
-        
       </Link>
     ))
   }

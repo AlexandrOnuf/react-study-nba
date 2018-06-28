@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { NewsList, NewsSlider, VideosList } from '../../components';
+import { NewsList, NewsSlider, VideosList } from 'components';  // tslint:disable-line
 
 
 const Home= () => {

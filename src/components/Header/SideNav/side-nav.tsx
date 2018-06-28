@@ -3,7 +3,7 @@ import SideNav from 'react-simple-sidenav';
 
 import SideNavItems from './side-nav-items';
 
-import { HeaderProps } from '../../../interfaces';
+import { HeaderProps } from 'interfaces';  // tslint:disable-line
 
 const SideNavigation = (props: HeaderProps) => {
   return (
