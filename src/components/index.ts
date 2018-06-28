@@ -1,3 +1,5 @@
+import NewsArticle from './Articles/News/Posts/articles';
+import VideoArticle from './Articles/Videos/Video/video';
 import Footer from './Footer/footer';
 import Header from './Header/header';
 import SideNavigation from './Header/SideNav/side-nav';
@@ -17,10 +19,12 @@ export {
   Footer,
   Header,
   Home,
+  NewsArticle,
   NewsList,
   NewsSlider,
   SideNavigation,
   SideNavigationItems,
   SliderTemplates,
+  VideoArticle,
   VideosList
 }

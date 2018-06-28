@@ -17,9 +17,7 @@ class VideosListTemplate extends React.PureComponent<Props> {
         <div className='videoListItem_wrapper'>
           <div className='left' style={{
               background: `url(/images/videos/${item.image})`
-            }}> 
-            <div/> {/* div used for make sizes for video and display play icon over video */}
-          </div>
+            }} />
           <div className='right'>
             <CardInfo teams={this.props.teams} 
               team_id={item.id} date={item.date}
@@ -27,6 +25,7 @@ class VideosListTemplate extends React.PureComponent<Props> {
             <h2>{item.title}</h2>
           </div>
         </div>
+        
       </Link>
     ))
   }

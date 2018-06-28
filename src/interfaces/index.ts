@@ -1,3 +1,4 @@
+import { ArticleHeaderProps, NewsArticleProps, NewsArticleState } from './Articles/News/i-articles';
 import Article from './DB/article';
 import Team from './DB/team';
 import Video from './DB/videos';
@@ -13,12 +14,15 @@ import AbstractList from './widgets/abstract-list';
 
 export {
   Article,
+  ArticleHeaderProps,
   ButtonProps,
   CardInfoProps,
   HeaderProps,
   LayoutState,
   Team,
   Video,
+  NewsArticleState,
+  NewsArticleProps,
   NewsListProps,
   NewsListState,
   NewsSliderProps,
