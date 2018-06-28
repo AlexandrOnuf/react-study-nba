@@ -67,7 +67,7 @@ export default class NewsList extends React.Component<NewsListProps, {}> {
           >
             <div>
               <div className='newslist_item'>
-                <Link to={`/articles/${item.id}`} >
+                <Link to={`/articles/${item.id}`}>
                   <CardInfo teams={this.state.teams} 
                     team_id={item.team} date={item.date}
                   />
@@ -75,6 +75,32 @@ export default class NewsList extends React.Component<NewsListProps, {}> {
                 </Link>
               </div>
             </div>
+          </CSSTransition>
+        ));
+        break;
+      case('cardMain'):
+        template = this.state.items.map( (item, i) => (
+          <CSSTransition
+            classNames={{
+               enter: 'newsList_wrapper',
+               enterActive: 'newsList_wrapper_enter'
+            }}
+            timeout={500}
+            key={i}
+          >
+            <Link to={`/articles/${item.id}`}>
+              <div className='flex_wrapper'>
+                <div className='left' style={{
+                  background: `url(/images/articles/${item.image})`
+                }} />
+                <div className='right'>
+                  <CardInfo teams={this.state.teams} 
+                    team_id={item.team} date={item.date}
+                  />
+                  <h2>{item.title}</h2>
+                </div>
+              </div>
+            </Link>
           </CSSTransition>
         ));
         break;

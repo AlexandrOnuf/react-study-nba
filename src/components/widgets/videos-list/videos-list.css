@@ -21,6 +21,8 @@
 
 .left {
   background-size: cover !important;
+  width:90px;
+  height:90px;
 }
 
 .left div {

@@ -1,4 +1,6 @@
+import NewsMain from './Articles/News/Main-page/main-page';
 import NewsArticle from './Articles/News/Posts/articles';
+import VideosMain from './Articles/Videos/Main-page/main-page';
 import VideoArticle from './Articles/Videos/Video/video';
 import Footer from './Footer/footer';
 import Header from './Header/header';
@@ -22,10 +24,12 @@ export {
   Home,
   NewsArticle,
   NewsList,
+  NewsMain,
   NewsSlider,
   SideNavigation,
   SideNavigationItems,
   SliderTemplates,
+  VideosMain,
   VideoArticle,
   VideosList,
   VideosRelated

@@ -1,5 +1,6 @@
 import { Video, Team } from 'interfaces'; // tslint:disable-line
 import * as React from 'react';
+import VideosListTemplate from '../videos-list-templates'; // tslint:disable-line
 import '../videos-list.css';
 
 interface Props {
@@ -8,21 +9,12 @@ interface Props {
 }
 
 const VideosRelated = (props: Props) => {
-  window.console.log(props)
     return (
-    // <div className='videoListItem_wrapper'>
-    //   <div className='left' style={{
-    //       background: `url(/images/videos/${item.image})`
-    //     }} />
-    //   <div className='right'>
-    //     <CardInfo teams={this.props.teams} 
-    //       team_id={item.id} date={item.date}
-    //     />
-    //     <h2>{item.title}</h2>
-    //   </div>
-    // </div>
-    <div>
-      related
+    <div className='relatedWrapper'>
+      <VideosListTemplate 
+        data={props.related}
+        teams={props.teams}
+      />
     </div>
   );
 }
