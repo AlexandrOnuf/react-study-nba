@@ -2,11 +2,10 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import axios from 'axios';
 /* tslint:disable */
-import { Button, CardInfo } from '../../../components';
-import { DB_HOST_URL } from '../../../config';
-import { NewsListProps, NewsListState } from '../../../interfaces';
+import { Button, CardInfo } from 'components';
+import { firebase, firebaseArticles, firebaseTeams, firebaseLooper } from 'firebase-config';
+import { Article, NewsListProps, NewsListState, Team } from 'interfaces';
 import './news-list.css';
 /* tslint:enable */
 
@@ -26,29 +25,34 @@ export default class NewsList extends React.Component<NewsListProps, {}> {
 
   public request(start: number, end: number) {
     if (this.state.teams.length < 1) {
-      axios.get(`${DB_HOST_URL}/teams`)
-        .then( response => {
+      firebaseTeams.once('value')
+        .then((snapshot: firebase.database.DataSnapshot) => {
+          const teams: Team[] = firebaseLooper(snapshot);
           this.setState({
-            teams: response.data
+            teams
           });
         })
     }
 
-    axios.get(`${DB_HOST_URL}/articles?_start=${start}&_end=${end}`)
-      .then( response => {
-        if (response.data) {
+    firebaseArticles.orderByChild('id').startAt(start).endAt(end).once('value')
+      .then((snapshot: firebase.database.DataSnapshot) => {
+        const items: Article[] = firebaseLooper(snapshot);
+        if (items) {
           this.setState({
             end,
-            items: [...this.state.items, ...response.data],
+            items: [...this.state.items, ...items],
             start
           });
         }
+      })
+      .catch((e) => {
+        window.console.log(e);
       })
   }
 
   public loadMore() {
     const newEnd = this.state.end + this.state.amount;
-    this.request(this.state.end, newEnd)
+    this.request(this.state.end + 1, newEnd)  // +1 потому что поле id в базе данных начинаются с 0
   }
 
   public renderNews = () => {

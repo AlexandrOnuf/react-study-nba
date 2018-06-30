@@ -1,10 +1,9 @@
-import axios from 'axios';
 import * as React from 'react';
 
 /* tslint:disable */
 import { SliderTemplates } from 'components';
-import { DB_HOST_URL } from 'config';
 import { Article, NewsSliderProps } from 'interfaces';
+import { firebase, firebaseArticles, firebaseLooper } from 'firebase-config';
 /* tslint:enable */
 
 interface NewsSliderState {
@@ -18,10 +17,11 @@ export default class NewsSlider extends React.Component<NewsSliderProps, {}> {
   }
 
   public componentWillMount() {
-    axios.get(`${DB_HOST_URL}/articles?_start=${this.props.start}&_end=${this.props.end}`)
-      .then( response => {
+    firebaseArticles.limitToFirst(3).once('value')
+      .then((snapshot: firebase.database.DataSnapshot) => {
+        const news: Article[] = firebaseLooper(snapshot);
         this.setState({
-          news: response.data
+          news
         });
       })
   }

@@ -1,8 +1,7 @@
-import axios from 'axios';
 import * as React from 'react'
 
-import { DB_HOST_URL } from 'config'; // tslint:disable-line
-import { NewsArticleProps, NewsArticleState } from 'interfaces'; // tslint:disable-line
+import { firebase, firebaseDB, firebaseLooper, firebaseTeams } from 'firebase-config'; // tslint:disable-line
+import { Article, NewsArticleProps, NewsArticleState, Team } from 'interfaces'; // tslint:disable-line
 import '../../articles.css';
 
 import Header from './header';
@@ -16,18 +15,17 @@ export default class NewsArticle extends React.Component<NewsArticleProps> {
   }
 
   public componentWillMount() {
-    axios.get(`${DB_HOST_URL}/articles?id=${this.props.match.params.id}`)
-      .then( response => {
-        const articleData = response.data[0];
+    firebaseDB.ref(`articles/${this.props.match.params.id}`).once('value')
+      .then((snapshot: firebase.database.DataSnapshot) => {
+        const article: Article = snapshot.val();
 
-        axios.get(`${DB_HOST_URL}/teams?id=${articleData.team}`)
-          .then( response => {  // tslint:disable-line
+        firebaseTeams.orderByChild('teamId').equalTo(article.team).once('value')
+          .then((snapshot: firebase.database.DataSnapshot) => { // tslint:disable-line
+            const team: Team = firebaseLooper(snapshot)[0] ? firebaseLooper(snapshot)[0] : null;
             this.setState({
-              article: articleData,
-              team: response.data[0]
+              article, team
             })
           })
-
       })
   }
 

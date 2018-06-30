@@ -11,5 +11,6 @@ export default interface Team {
   poll: boolean;
   count: number;
   descriptions: string;
-  stats: Stats[]
+  stats: Stats[];
+  teamId: number | string;
 }

@@ -1,13 +1,10 @@
 import * as React from 'react';
-// import { Link } from 'react-router-dom';
-
-import axios from 'axios';
 
 /* tslint:disable */
 import { Button } from 'components';
-import { DB_HOST_URL } from 'config';
-import { VideosListProps, VideosListState } from 'interfaces';
+import { VideosListProps, VideosListState, Team, Video } from 'interfaces';
 import VideosListTemplate from './videos-list-templates';
+import { firebase, firebaseLooper, firebaseTeams, firebaseVideos } from 'firebase-config';
 import './videos-list.css';
 /* tslint:enable */
 
@@ -28,28 +25,36 @@ export default class VideosList extends React.Component<VideosListProps> {
 
   public request(start: number, end: number) {
     if (this.state.teams.length < 1) {
-      axios.get(`${DB_HOST_URL}/teams`)
-        .then( response => {
+      firebaseTeams.once('value')
+        .then((snapshot: firebase.database.DataSnapshot) => {
+          const teams: Team[] = firebaseLooper(snapshot);
           this.setState({
-            teams: response.data
+            teams
           });
+        })
+        .catch((e) => {
+          window.console.log(e);
         })
     }
 
-    axios.get(`${DB_HOST_URL}/videos?_start=${start}&_end=${end}`)
-      .then( response => {
-        if (response.data) {
+    firebaseVideos.orderByChild('id').startAt(start).endAt(end).once('value')
+      .then((snapshot: firebase.database.DataSnapshot) => {
+        const videos: Video[] = firebaseLooper(snapshot);
+        if (videos) {
           this.setState({
             end ,start,
-            videos: [...this.state.videos, ...response.data]
+            videos: [...this.state.videos, ...videos]
           });
         }
+      })
+      .catch((e) => {
+        window.console.log(e);
       })
   }
 
   public loadMore() {
     const newEnd = this.state.end + this.state.amount;
-    this.request(this.state.end, newEnd)
+    this.request(this.state.end + 1, newEnd) // +1 потому что поле id в базе данных начинаются с 0
   }
 
   public renderButton = (): JSX.Element => {

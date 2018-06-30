@@ -1,8 +1,7 @@
-import axios from 'axios'
 import * as React from 'react';
 
 import { VideosRelated } from 'components';  // tslint:disable-line
-import { DB_HOST_URL } from 'config'; // tslint:disable-line
+import { firebase, firebaseDB, firebaseLooper, firebaseVideos, firebaseTeams } from 'firebase-config'; // tslint:disable-line
 import { NewsArticleProps, Team, Video } from 'interfaces'; // tslint:disable-line
 
 import '../../articles.css';
@@ -10,7 +9,7 @@ import Header from './header';
 
 
 interface VideoArticleState {
-  article: Video | null;
+  videoArticle: Video | null;
   team: Team | null;
   teams?: Team[];
   related?: Video[];
@@ -19,66 +18,65 @@ interface VideoArticleState {
 
 export default class VideoArticle extends React.Component<NewsArticleProps> {
   public readonly state: VideoArticleState = {
-    article: null,
-    team: null
+    team: null,
+    videoArticle: null
   }
 
   public componentWillMount() {
-    axios.get(`${DB_HOST_URL}/videos?id=${this.props.match.params.id}`)
-      .then( response => {
-        const articleData = response.data[0];
+    firebaseDB.ref(`videos/${this.props.match.params.id}`).once('value')
+      .then((snapshot: firebase.database.DataSnapshot) => {
+        const videoArticle: Video = snapshot.val();
 
-        axios.get(`${DB_HOST_URL}/teams?id=${articleData.team}`)
-          .then( response => {  // tslint:disable-line
+        if (videoArticle && videoArticle.team) {
+          firebaseTeams.orderByChild('teamId').equalTo(videoArticle.team).once('value')
+          .then((snapshot: firebase.database.DataSnapshot) => { // tslint:disable-line
+            const team: Team = firebaseLooper(snapshot)[0] ? firebaseLooper(snapshot)[0] : null;
             this.setState({
-              article: articleData,
-              team: response.data[0]
+              team, videoArticle
             });
             this.getRelated();
           })
-
+        }
       })
   }
 
   public getRelated() {
     if (this.state.team) {
-      axios.get(`${DB_HOST_URL}/teams`)
-        .then( response => {
-          const teams: Team[] = response.data;
+      firebaseTeams.once('value')
+        .then( (snapshot: firebase.database.DataSnapshot) => {
+          const teams: Team[] = firebaseLooper(snapshot);
 
-          axios.get(`${DB_HOST_URL}/videos?q=${this.state.team!.city}&_limit=3`)
-            .then( response1  => {
+          firebaseVideos.orderByChild('team').equalTo(this.state.team!.teamId).limitToFirst(3).once('value')
+            .then((snapshot: firebase.database.DataSnapshot) => { // tslint:disable-line
               this.setState({
-                related: response1.data,
+                related: firebaseLooper(snapshot),
                 teams
               });
-              // window.console.log(this.state)
             })
-
         })
     }
   }
 
   public render() {
-    const article = this.state.article;
+    const videoArticle = this.state.videoArticle;
     const team = this.state.team;
 
     return (
        <div>
-        { article && (
+        { videoArticle && (
           <div> 
             <Header 
               teamData={team}
-              date={article.date}
-              author={article.author}
+              date={videoArticle.date}
+              author={videoArticle.author}
             />
             <div className='videoWrapper'>
-              <h1>{article.title}</h1>
+              <h1>{videoArticle.title}</h1>
               <iframe
                 title='videoplayer'
                 width='100%'
                 height='300px'
-                src={`https://www.youtube.com/embed/${article.url}`}
+                src={`https://www.youtube.com/embed/${videoArticle.url}`}
               />                
             </div>
             {this.state.related && this.state.related.length && this.state.teams && (

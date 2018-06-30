@@ -1,5 +1,5 @@
 export default interface Article {
-  id: number;
+  id: number | string;
   team: number;
   title: string;
   image?: string;
