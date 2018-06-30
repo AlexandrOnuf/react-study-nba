@@ -1,5 +1,5 @@
-enum InputType {
-  button = 'button',	// Defines a clickable button (mostly used with a JavaScript to activate a script)
+export enum InputType {
+  button = 'button' ,	// Defines a clickable button (mostly used with a JavaScript to activate a script)
   checkbox = 'checkbox',	// Defines a checkbox
   color = 'color',	// Defines a color picker
   date = 'date',	// Defines a date control (year, month, day (no time))

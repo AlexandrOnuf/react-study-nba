@@ -3,9 +3,10 @@ const { Component } = React;
 import './sign-in.css';
 // tslint:disable
 import { FormField } from 'components';
-import { FormFieldInputProps } from 'interfaces';
+import { FormFieldInputProps, InputType } from 'interfaces';
 // tslint:enable
 
+// const INPUT_TYPES_ARRAY = Object.keys(InputType);
 interface SignInState<K extends string> {
   formData: {
     [P in K]: FormFieldInputProps;
