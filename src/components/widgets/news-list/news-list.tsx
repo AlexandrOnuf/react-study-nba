@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-/* tslint:disable */
+// tslint:disable
 import { Button, CardInfo } from 'components';
 import { firebase, firebaseArticles, firebaseTeams, firebaseLooper } from 'firebase-config';
 import { Article, NewsListProps, NewsListState, Team } from 'interfaces';
 import './news-list.css';
-/* tslint:enable */
+// tslint:enable
 
 export default class NewsList extends React.Component<NewsListProps, {}> {
 

@@ -7,9 +7,11 @@ import Header from './Header/header';
 import SideNavigation from './Header/SideNav/side-nav';
 import SideNavigationItems from './Header/SideNav/side-nav-items';
 import Home from './Home/home';
+import SignIn from './sign-in/sign-in';
 
 import Button from './widgets/buttons/button';
 import CardInfo from './widgets/card-info/card-info';
+import FormField from './widgets/form-fields/form-fields';
 import NewsList from './widgets/news-list/news-list';
 import NewsSlider from './widgets/news-slider/slider';
 import SliderTemplates from './widgets/news-slider/slider-templates';  
@@ -20,6 +22,7 @@ export {
   Button,
   CardInfo,
   Footer,
+  FormField,
   Header,
   Home,
   NewsArticle,
@@ -27,6 +30,7 @@ export {
   NewsMain,
   NewsSlider,
   SideNavigation,
+  SignIn,
   SideNavigationItems,
   SliderTemplates,
   VideosMain,

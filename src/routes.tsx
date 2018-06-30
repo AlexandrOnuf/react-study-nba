@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Layout from './hoc/Layout/layout';
 
 
-import { Home, NewsArticle, NewsMain, VideoArticle, VideosMain } from './components';
+import { Home, NewsArticle, NewsMain, SignIn, VideoArticle, VideosMain } from './components';
 
 class Router extends React.Component {
   public render() {
@@ -15,6 +15,7 @@ class Router extends React.Component {
           <Route path='/articles/:id' exact={true} component={NewsArticle} />
           <Route path='/videos/:id' exact={true} component={VideoArticle} />          
           <Route path='/videos/' exact={true} component={VideosMain} />
+          <Route path='/sign-in/' exact={true} component={SignIn} />
         </Switch>
       </Layout>
     )

@@ -21,7 +21,7 @@ class VideosListTemplate extends React.PureComponent<Props> {
           </div>
           <div className='right'>
             <CardInfo teams={this.props.teams} 
-              team_id={item.id} date={item.date}
+              team_id={item.team!} date={item.date}
             />
             <h2>{item.title}</h2>
           </div>

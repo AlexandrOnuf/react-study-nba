@@ -81,9 +81,9 @@ export default class VideoArticle extends React.Component<NewsArticleProps> {
             </div>
             {this.state.related && this.state.related.length && this.state.teams && (
               <VideosRelated 
-              related={this.state.related}
-              teams={this.state.teams}  
-            />
+                related={this.state.related}
+                teams={this.state.teams}  
+              />
             )}
           </div>) 
         } 
