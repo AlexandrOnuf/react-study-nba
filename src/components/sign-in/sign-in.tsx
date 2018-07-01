@@ -43,6 +43,7 @@ export default class SignIn extends Component<RouteComponentProps<any>> {
       ...newFormData[element.id]
     };
     newElement.value = element.event.target.value;
+    
     if(element.blur) {
       const validationResult = this.validate(newElement);
       newElement.valid = validationResult[0];
