@@ -23,13 +23,14 @@ export enum InputType {
   week = 'week'
 }
 
+export interface FieldConfig {
+  name: string;
+  placeholder: string;
+  type: keyof typeof InputType;
+}
 
 export default interface FormFieldInputProps {
-  config: {
-    name: string;
-    placeholder: string;
-    type: keyof typeof InputType;
-  },
+  config: FieldConfig;
   element: string;
   touched: boolean;
   valid: boolean;

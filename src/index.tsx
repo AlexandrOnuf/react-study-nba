@@ -2,18 +2,22 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 
+import { firebase } from './firebase-config';
 import Routes from './routes';
 
 
-const App = () => {
+const App = (props: {user: firebase.User | null}) => {
   return (
     <BrowserRouter>
-      <Routes/>
+      <Routes {...props} />
     </BrowserRouter>
   )  
 };
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root') as HTMLElement
-);
+firebase.auth().onAuthStateChanged((user) => {
+  ReactDOM.render(
+    <App user={user}/>,
+    document.getElementById('root') as HTMLElement
+  );
+});
+

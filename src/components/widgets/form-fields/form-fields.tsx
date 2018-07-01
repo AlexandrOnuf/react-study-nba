@@ -12,6 +12,19 @@ interface Props {
 
 const FormField = ({formData, change, id}: Props) => {
 
+  const showErrorMessage = (): JSX.Element => {
+    let errorMessage: JSX.Element = <span/>;
+
+    if (formData.validation && !formData.valid) {
+      errorMessage = (
+        <div className='labelError'>
+          {formData.validationMessage}
+        </div>
+      );
+    }
+    return errorMessage;
+  };
+
   const renderTemplate = (): JSX.Element => {
     let formTemlate = (<div/>);
 
@@ -25,6 +38,7 @@ const FormField = ({formData, change, id}: Props) => {
               onBlur={(event) => change({event, id, blur:true})}
               onChange={(event) => change({event, id, blur:false})}
             />
+            {showErrorMessage()}
           </div>
         );
         break;

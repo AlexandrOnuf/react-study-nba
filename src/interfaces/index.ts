@@ -2,7 +2,7 @@ import { ArticleHeaderProps, NewsArticleProps, NewsArticleState } from './Articl
 import Article from './DB/article';
 import Team from './DB/team';
 import Video from './DB/videos';
-import FormFieldInputProps, { InputType } from './form-fields/i-form-fields';
+import FormFieldInputProps, { FieldConfig, InputType } from './form-fields/i-form-fields';
 import { HeaderProps } from './Header/header';
 import { LayoutState } from './Layout/layout';
 import ButtonProps from './widgets/button';
@@ -20,6 +20,7 @@ export {
   CardInfoProps,
   FormFieldInputProps,
   InputType,
+  FieldConfig,
   HeaderProps,
   LayoutState,
   Team,

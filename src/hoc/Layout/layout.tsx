@@ -5,7 +5,7 @@ import { Footer, Header } from '../../components';
 import { LayoutState } from '../../interfaces';
 
 
-class Layout extends React.Component<{}, LayoutState> {
+class Layout extends React.Component<any, LayoutState> {
   
   public readonly state = {
     showNav: false
@@ -21,6 +21,7 @@ class Layout extends React.Component<{}, LayoutState> {
     return (
       <div>
         <Header
+          user={this.props.user}
           showNav={this.state.showNav}
           onHideNav={() => this.toggleSideNav(false)}
           onOpenNav={() => this.toggleSideNav(true)}
