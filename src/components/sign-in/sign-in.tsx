@@ -55,9 +55,35 @@ export default class SignIn extends Component {
     registerError: '',
   }
 
-  public updateForm = (element: HTMLElement): void => {
-    window.console.log(element);
+  public updateForm = (element: {event: any; id:string; blur:boolean}): void => {
+    const newFormData = {
+      ...this.state.formData
+    };
+    const newElement: FormFieldInputProps = {
+      ...newFormData[element.id]
+    };
+    newElement.value = element.event.target.value;
+    if(element.blur) {
+      const validData = this.validate(newElement)
+    }
+
+    newFormData[element.id] = newElement;
+
+    this.setState({
+      formData: newFormData
+    });
   };
+
+  public validate = (element: FormFieldInputProps) => {
+    let error = [true, ''];
+
+    if(element.validation.required) {
+      const valid = element.value.trim() ? true : false;
+      const message = `${!valid ? 'This field is required' : ''}`;
+      error = !valid ? [valid, message] : error;
+    }
+    return error;
+  }
 
   public render() {
     return (
@@ -66,7 +92,12 @@ export default class SignIn extends Component {
           <FormField 
             id={'email'}
             formData={this.state.formData.email}
-            change={(element: HTMLElement) => this.updateForm}
+            change={(element: any) => this.updateForm(element)}
+          />
+          <FormField 
+            id={'password'}
+            formData={this.state.formData.password}
+            change={(element: {event: any; id:string; blur:boolean}) => this.updateForm(element)}
           />
         </form>
       </div>

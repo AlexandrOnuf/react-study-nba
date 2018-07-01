@@ -33,7 +33,7 @@ export default interface FormFieldInputProps {
   element: string;
   touched: boolean;
   valid: boolean;
-  validation: {};
+  validation: any;
   validationMessage: string;
   value: string;
 }
