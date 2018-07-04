@@ -1,10 +1,10 @@
 import React from 'react';
 import './form-fields.css';
 
-import { FormFieldInputProps } from 'interfaces'; // tslint:disable-line
+import { FormFieldInputProps, FormFieldSelectProps } from 'interfaces'; // tslint:disable-line
 
 interface Props {
-  formData: FormFieldInputProps;
+  formData: FormFieldInputProps | any;
   change: (element: {event: any; id:string; blur:boolean}) => void;
   id: string;
 }
@@ -38,6 +38,26 @@ const FormField = ({formData, change, id}: Props) => {
               onBlur={(event) => change({event, id, blur:true})}
               onChange={(event) => change({event, id, blur:false})}
             />
+            {showErrorMessage()}
+          </div>
+        );
+        break;
+      case 'select':
+        formTemlate = (
+          <div>
+            <select
+              value={formData.value} name={formData.config.name}
+              onBlur={(event) => change({event, id, blur:true})}
+              onChange={(event) => change({event, id, blur:false})}
+            >
+              { formData.config.options!.map((item: {id: number|string; name: string}, i: number) => {
+                return (
+                  <option key={i} value={item.id} >
+                    {item.name}
+                  </option>
+                )
+              })}
+            </select>
             {showErrorMessage()}
           </div>
         );

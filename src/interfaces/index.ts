@@ -1,8 +1,9 @@
 import { ArticleHeaderProps, NewsArticleProps, NewsArticleState } from './Articles/News/i-articles';
+import DashboardState from './Dashboard/i-dashboard';
 import Article from './DB/article';
 import Team from './DB/team';
 import Video from './DB/videos';
-import FormFieldInputProps, { FieldConfig, InputType } from './form-fields/i-form-fields';
+import FormFieldInputProps, { FieldConfig, FieldSelectConfig, FormFieldSelectProps, InputType } from './form-fields/i-form-fields';
 import { HeaderProps } from './Header/header';
 import { LayoutState } from './Layout/layout';
 import ButtonProps from './widgets/button';
@@ -18,7 +19,10 @@ export {
   ArticleHeaderProps,
   ButtonProps,
   CardInfoProps,
+  DashboardState,
+  FieldSelectConfig,
   FormFieldInputProps,
+  FormFieldSelectProps,
   InputType,
   FieldConfig,
   HeaderProps,

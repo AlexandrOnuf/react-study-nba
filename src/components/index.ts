@@ -12,6 +12,7 @@ import SignIn from './sign-in/sign-in';
 
 import Button from './widgets/buttons/button';
 import CardInfo from './widgets/card-info/card-info';
+import FUploader from './widgets/file-uploader/file-uploader';
 import FormFieldInputModel from './widgets/form-fields/form-field.model';
 import FormField from './widgets/form-fields/form-fields';
 import NewsList from './widgets/news-list/news-list';
@@ -21,7 +22,8 @@ import VideosList from './widgets/videos-list/videos-list';
 import VideosRelated from './widgets/videos-list/videos-related/videos-related';
 
 export {
-  Button, CardInfo, Dashboard, NewsList, NewsSlider, SliderTemplates, VideosList, VideosRelated,
+  Button, CardInfo, Dashboard, FUploader, NewsList, NewsSlider, SliderTemplates,
+  VideosList, VideosRelated,
   FormField, FormFieldInputModel,
 
   Footer, Home, SignIn,

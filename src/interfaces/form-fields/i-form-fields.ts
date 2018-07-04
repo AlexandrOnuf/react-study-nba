@@ -23,18 +23,36 @@ export enum InputType {
   week = 'week'
 }
 
-export interface FieldConfig {
-  name: string;
-  placeholder: string;
-  type: keyof typeof InputType;
-}
 
-export default interface FormFieldInputProps {
-  config: FieldConfig;
+interface InputBaseProps {
   element: string;
   touched: boolean;
   valid: boolean;
   validation: any;
   validationMessage: string;
   value: string;
+}
+
+export interface FieldConfig {
+  name: string;
+  placeholder: string;
+  type: keyof typeof InputType;
+}
+
+export default interface FormFieldInputProps extends InputBaseProps {
+  config: FieldConfig;
+}
+
+
+interface SelectFieldOptions {
+  id: number|string; 
+  name: string;
+}
+export interface FieldSelectConfig {
+  name: string;
+  options: SelectFieldOptions[];
+}
+
+export interface FormFieldSelectProps extends InputBaseProps {
+  config: FieldSelectConfig;
 }
