@@ -4,8 +4,8 @@ import * as React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 
 import { FUploader, FormField, FormFieldInputModel } from 'components'; // tslint:disable-line
-import { firebase, firebaseTeams } from 'firebase-config'; // tslint:disable-line
-import { DashboardState, FormFieldInputProps, Team } from 'interfaces'; // tslint:disable-line
+import { firebase, firebaseArticles, firebaseTeams } from 'firebase-config'; // tslint:disable-line
+import { DashboardState, FormFieldInputProps, FormFieldSelectProps, Team, SelectFieldOptions } from 'interfaces'; // tslint:disable-line
 
 import './dashboard.css';
 
@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component<any, DashboardState> {
         valid: true,
         value: '',
       },
-      teams: {
+      team: {
         config: {
           name: 'teams_input',
           options: new Array(),
@@ -40,7 +40,7 @@ export default class Dashboard extends React.Component<any, DashboardState> {
           required: true
         },
         validationMessage: '',
-        value: '',
+        value: -1,
       },
       title: new FormFieldInputModel(
         { name:'title_input', placeholder:'Enter the post title', type: 'text' },
@@ -85,8 +85,8 @@ export default class Dashboard extends React.Component<any, DashboardState> {
           />
 
           <FormField
-            id={'teams'}
-            formData={this.state.formData.teams}
+            id={'team'}
+            formData={this.state.formData.team}
             change={(element: {event: any; id:string; blur:boolean}) => this.updateForm(element)}
           />
 
@@ -101,7 +101,7 @@ export default class Dashboard extends React.Component<any, DashboardState> {
   protected loadTeams = () => {
     firebaseTeams.once('value')
       .then((snapshot: firebase.database.DataSnapshot) => {
-        const teams: object[] = [];
+        const teams: SelectFieldOptions[] = [];
 
         snapshot.forEach((childSnapshot: firebase.database.DataSnapshot) => {
           teams.push({
@@ -111,10 +111,14 @@ export default class Dashboard extends React.Component<any, DashboardState> {
         });
        
         const newFormData = {...this.state.formData};
-        const newElement = {...newFormData.teams};
+        const newElement: FormFieldSelectProps = {...newFormData.team};
 
         newElement.config.options = teams;
-        newFormData.teams = newElement;
+        if (teams) {
+          newElement.valid = true;
+          newElement.value = parseInt(teams[0].id, 10)
+        }
+        newFormData.team = newElement;
 
         this.setState({
           formData: newFormData
@@ -147,10 +151,15 @@ export default class Dashboard extends React.Component<any, DashboardState> {
     const newFormData = {
       ...this.state.formData
     };
-    const newElement: FormFieldInputProps = {
+    const newElement: FormFieldInputProps|FormFieldSelectProps = {
       ...newFormData[element.id]
     };
-    newElement.value = content.trim() || element.event === undefined ? content : element.event.target.value;
+
+    if (element.id === 'team') {  // tslint:disable-line
+      newElement.value = parseInt(element.event.target.value, 10);
+    } else {
+      newElement.value = content.trim() || element.event === undefined ? content : element.event.target.value;
+    }
 
     if(element.blur) {
       const validationResult = this.validate(newElement);
@@ -165,6 +174,7 @@ export default class Dashboard extends React.Component<any, DashboardState> {
     this.setState({
       formData: newFormData
     });
+
   };
 
   protected storeFilename = (filename: string) => {
@@ -189,13 +199,33 @@ export default class Dashboard extends React.Component<any, DashboardState> {
         loading: true,
         postError: ''
       });
+
+      firebaseArticles.orderByChild('id')
+        .limitToLast(1).once('value')
+        .then( snapshot => {
+          let articleId: number | null = null;
+          snapshot.forEach(childSnapshot => {
+            articleId = childSnapshot.val().id;
+          });
+
+          dataToSubmit.date = firebase.database.ServerValue.TIMESTAMP;
+          dataToSubmit.id = articleId ? ++articleId : 0;
+
+          firebaseArticles.push(dataToSubmit)
+            .then(article => {
+              this.props.history.push(`/articles/${article.key}`)
+            })/* .catch( (error) => {
+              this.setState({
+                postError: error.message
+              })  
+            }) */
+
+        })
     } else {
       this.setState({
         postError: 'Something went wrong'
       });
     }
-
-    window.console.log(dataToSubmit);
   } 
 
   protected showErrorMessage = (): JSX.Element => (
@@ -205,11 +235,15 @@ export default class Dashboard extends React.Component<any, DashboardState> {
       <span/>
   )
 
-  protected validate = (element: FormFieldInputProps): [boolean, string] => {
+  protected validate = (element: FormFieldInputProps|FormFieldSelectProps): [boolean, string] => {
     let error: [boolean, string] = [true, ''];
 
     if(element.validation.required) {
-      const valid = element.value.trim() ? true : false;
+      if (typeof element.value === 'string') {
+        element.value = element.value.trim();
+      }
+      const valid = element.value ? true : false;
+      
       const message = `${!valid ? 'This field is required' : ''}`;
       error = !valid ? [valid, message] : error;
     }

@@ -16,7 +16,7 @@ export default interface DashboardState {
       valid: boolean;
       value: string;
     };
-    teams: FormFieldSelectProps;
+    team: FormFieldSelectProps;
     title: FormFieldInputProps;
   };
   loading: boolean;

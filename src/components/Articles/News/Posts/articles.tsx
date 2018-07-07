@@ -11,6 +11,7 @@ export default class NewsArticle extends React.Component<NewsArticleProps> {
 
   public readonly state: NewsArticleState = {
     article: null,
+    imageURL: '',
     team: null
   }
 
@@ -24,7 +25,11 @@ export default class NewsArticle extends React.Component<NewsArticleProps> {
             const team: Team = firebaseLooper(snapshot)[0] ? firebaseLooper(snapshot)[0] : null;
             this.setState({
               article, team
-            })
+            });
+
+            if (article.image) {
+              this.getImageURL(article.image);
+            }
           })
       })
   }
@@ -45,15 +50,26 @@ export default class NewsArticle extends React.Component<NewsArticleProps> {
             <div className='articleBody'>
               <h1>{article.title}</h1>
               <div className='articleImage' style={{
-                background: `url(/images/articles/${article.image})`
+                background: `url('${this.state.imageURL}')`
               }} />
-              <div className='articleText'>
-                {article.body}
-              </div>
+              <div className='articleText'
+                dangerouslySetInnerHTML={{__html: article.body}}
+              />
             </div>
           </div>) 
         } 
       </div>
     )
+  }
+
+
+  protected getImageURL = (filename: string) => {
+    firebase.storage().ref('images')
+      .child(filename).getDownloadURL()
+      .then((url: string) => {
+        this.setState({
+          imageURL: url
+        });
+      })
   }
 }

@@ -24,13 +24,13 @@ export enum InputType {
 }
 
 
-interface InputBaseProps {
+interface InputBaseProps<T=string|number> {
   element: string;
   touched: boolean;
   valid: boolean;
   validation: any;
   validationMessage: string;
-  value: string;
+  value: T;
 }
 
 export interface FieldConfig {
@@ -39,13 +39,13 @@ export interface FieldConfig {
   type: keyof typeof InputType;
 }
 
-export default interface FormFieldInputProps extends InputBaseProps {
+export default interface FormFieldInputProps extends InputBaseProps<string> {
   config: FieldConfig;
 }
 
 
-interface SelectFieldOptions {
-  id: number|string; 
+export interface SelectFieldOptions {
+  id: string; 
   name: string;
 }
 export interface FieldSelectConfig {
@@ -53,6 +53,6 @@ export interface FieldSelectConfig {
   options: SelectFieldOptions[];
 }
 
-export interface FormFieldSelectProps extends InputBaseProps {
+export interface FormFieldSelectProps extends InputBaseProps<number> {
   config: FieldSelectConfig;
 }

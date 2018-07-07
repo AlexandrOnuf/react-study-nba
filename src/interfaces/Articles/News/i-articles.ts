@@ -5,6 +5,7 @@ import { Article, Team } from '../../../interfaces';
 
 export interface NewsArticleState {
   article: Article | null;
+  imageURL: string;
   team: Team | null;
 }
 

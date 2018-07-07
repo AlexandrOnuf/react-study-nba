@@ -2,6 +2,8 @@ import NewsMain from './Articles/News/Main-page/main-page';
 import NewsArticle from './Articles/News/Posts/articles';
 import VideosMain from './Articles/Videos/Main-page/main-page';
 import VideoArticle from './Articles/Videos/Video/video';
+import PrivateRoutes from './AuthRoutes/privateRoutes';
+import PublicRoutes from './AuthRoutes/publicRoutes';
 import Dashboard from './Dashboard/dashboard';
 import Footer from './Footer/footer';
 import Header from './Header/header';
@@ -32,4 +34,6 @@ export {
   VideosMain, VideoArticle,
   
   Header, SideNavigation, SideNavigationItems,
+
+  PrivateRoutes, PublicRoutes
 }
